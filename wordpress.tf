@@ -1,7 +1,7 @@
 resource "kubernetes_service" "wordpress" {
   metadata {
     name = "wordpress"
-    labels {
+    labels = {
       app = "wordpress"
     }
   }
@@ -9,9 +9,9 @@ resource "kubernetes_service" "wordpress" {
     port {
       port = 80
     }
-    selector {
-      app = "wordpress"
-      tier = "${kubernetes_replication_controller.wordpress.spec.0.selector.tier}"
+    selector = {
+      app  = "wordpress"
+      tier = kubernetes_replication_controller.wordpress.spec[0].selector.tier
     }
     type = "LoadBalancer"
   }
@@ -20,31 +20,31 @@ resource "kubernetes_service" "wordpress" {
 resource "kubernetes_persistent_volume_claim" "wordpress" {
   metadata {
     name = "wp-pv-claim"
-    labels {
+    labels = {
       app = "wordpress"
     }
   }
   spec {
     access_modes = ["ReadWriteOnce"]
     resources {
-      requests {
+      requests = {
         storage = "20Gi"
       }
     }
-    volume_name = "${kubernetes_persistent_volume.wordpress.metadata.0.name}"
+    volume_name = kubernetes_persistent_volume.wordpress.metadata[0].name
   }
 }
 
 resource "kubernetes_replication_controller" "wordpress" {
   metadata {
     name = "wordpress"
-    labels {
+    labels = {
       app = "wordpress"
     }
   }
   spec {
-    selector {
-      app = "wordpress"
+    selector = {
+      app  = "wordpress"
       tier = "frontend"
     }
     template {
@@ -53,26 +53,26 @@ resource "kubernetes_replication_controller" "wordpress" {
         name  = "wordpress"
 
         env {
-          name = "WORDPRESS_DB_HOST"
+          name  = "WORDPRESS_DB_HOST"
           value = "wordpress-mysql"
         }
         env {
           name = "WORDPRESS_DB_PASSWORD"
           value_from {
             secret_key_ref {
-              name = "${kubernetes_secret.mysql.metadata.0.name}"
-              key = "password"
+              name = kubernetes_secret.mysql.metadata[0].name
+              key  = "password"
             }
           }
         }
 
         port {
           container_port = 80
-          name = "wordpress"
+          name           = "wordpress"
         }
 
         volume_mount {
-          name = "wordpress-persistent-storage"
+          name       = "wordpress-persistent-storage"
           mount_path = "/var/www/html"
         }
       }
@@ -80,9 +80,10 @@ resource "kubernetes_replication_controller" "wordpress" {
       volume {
         name = "wordpress-persistent-storage"
         persistent_volume_claim {
-          claim_name = "${kubernetes_persistent_volume_claim.wordpress.metadata.0.name}"
+          claim_name = kubernetes_persistent_volume_claim.wordpress.metadata[0].name
         }
       }
     }
   }
 }
+
