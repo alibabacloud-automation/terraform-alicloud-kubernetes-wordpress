@@ -1,14 +1,12 @@
-provider "kubernetes" {}
-
 resource "kubernetes_persistent_volume" "mysql" {
   metadata {
     name = "local-pv-mysql"
-    labels {
+    labels = {
       type = "local"
     }
   }
   spec {
-    capacity {
+    capacity = {
       storage = "20Gi"
     }
     access_modes = ["ReadWriteOnce"]
@@ -24,12 +22,12 @@ resource "kubernetes_persistent_volume" "mysql" {
 resource "kubernetes_persistent_volume" "wordpress" {
   metadata {
     name = "local-pv-wordpress"
-    labels {
+    labels = {
       type = "local"
     }
   }
   spec {
-    capacity {
+    capacity = {
       storage = "20Gi"
     }
     access_modes = ["ReadWriteOnce"]
