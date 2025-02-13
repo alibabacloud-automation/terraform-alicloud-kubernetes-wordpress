@@ -1,3 +1,9 @@
+data "alicloud_instance_types" "default" {
+  #  kubernetes_node_role = "Worker"
+  cpu_core_count = 1
+  memory_size    = 2
+}
+
 #############################################################
 # create managed-kubernetes
 #############################################################
@@ -11,7 +17,7 @@ module "managed-k8s" {
   new_vpc               = true
   k8s_pod_cidr          = cidrsubnet("10.0.0.0/8", 8, 36)
   k8s_service_cidr      = cidrsubnet("172.16.0.0/16", 4, 7)
-  worker_instance_types = ["ecs.n1.medium"]
+  worker_instance_types = [data.alicloud_instance_types.default.instance_types[0].id]
   kubernetes_version    = "1.24.6-aliyun.1"
   cluster_addons = [
     {
