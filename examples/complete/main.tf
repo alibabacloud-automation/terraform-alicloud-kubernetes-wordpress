@@ -10,7 +10,7 @@ data "alicloud_instance_types" "default" {
 
 module "managed-k8s" {
   source  = "terraform-alicloud-modules/managed-kubernetes/alicloud"
-  version = "1.6.0"
+  version = "2.0.0"
 
   k8s_name_prefix       = "tf-example"
   cluster_spec          = "ack.pro.small"
