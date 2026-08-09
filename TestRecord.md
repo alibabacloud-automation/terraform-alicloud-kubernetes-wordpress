@@ -1,3 +1,15 @@
+## 09 Aug 2026 02:39 UTC
+
+success : false
+
+### Versions
+
+Terraform v1.14.3
+on linux_amd64
++ provider registry.terraform.io/aliyun/alicloud v1.288.0
++ provider registry.terraform.io/hashicorp/kubernetes v3.2.1
++ provider registry.terraform.io/hashicorp/random v3.9.0
+
 ## 02 Aug 2026 02:15 UTC
 
 success : false
