@@ -1,7 +1,7 @@
 data "alicloud_instance_types" "default" {
   #  kubernetes_node_role = "Worker"
-  cpu_core_count = 1
-  memory_size    = 2
+  cpu_core_count = 2
+  memory_size    = 4
 }
 
 #############################################################
@@ -14,6 +14,8 @@ module "managed-k8s" {
 
   k8s_name_prefix       = "tf-example"
   cluster_spec          = "ack.pro.small"
+  cpu_core_count        = 2
+  memory_size           = 4
   new_vpc               = true
   k8s_pod_cidr          = cidrsubnet("10.0.0.0/8", 8, 36)
   k8s_service_cidr      = cidrsubnet("172.16.0.0/16", 4, 7)
