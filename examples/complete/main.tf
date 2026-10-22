@@ -57,7 +57,8 @@ provider "kubernetes" {
 module "k8s" {
   source = "../.."
 
-  mysql_password = "Abc1234"
+  wordpress_version = "7.1.3-php8.3"
+  mysql_password    = "Abc1234"
 
   depends_on = [data.alicloud_cs_cluster_credential.auth]
 }

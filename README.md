@@ -37,18 +37,19 @@ terraform init
 ```
 
 then we carry on by creating the real infrastructure which requires
-password for the MySQL server.
+password for the MySQL server and an explicit WordPress image version.
+`wordpress_version` defaults to `null` and must be set before applying.
 
 ```sh
-terraform apply -var 'mysql_password=Test12345'
+terraform apply -var 'wordpress_version=7.1.3-php8.3' -var 'mysql_password=Test12345'
 ```
 
-You may also specify version of WordPress and/or MySQL
+You may also specify the MySQL version
 
 ```sh
 terraform apply \
 	-var 'mysql_version=5.6' \
-	-var 'wordpress_version=4.7.3' \
+	-var 'wordpress_version=7.1.3-php8.3' \
 	-var 'mysql_password=Test12345'
 ```
 
@@ -74,5 +75,5 @@ open "http://$(terraform output lb_ip)"
 ### Destroy
 
 ```
-terraform destroy -var 'mysql_password=Test12345'
+terraform destroy -var 'wordpress_version=7.1.3-php8.3' -var 'mysql_password=Test12345'
 ```
