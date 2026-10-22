@@ -52,12 +52,17 @@ module "managed-k8s" {
 data "alicloud_cs_cluster_credential" "auth" {
   cluster_id                 = module.managed-k8s.this_k8s_id
   temporary_duration_minutes = 60
-  output_file                = "./config"
 }
 
+locals {
+  kube_config = yamldecode(data.alicloud_cs_cluster_credential.auth.kube_config)
+}
 
 provider "kubernetes" {
-  config_path = data.alicloud_cs_cluster_credential.auth.output_file
+  host                   = local.kube_config.clusters[0].cluster.server
+  cluster_ca_certificate = base64decode(local.kube_config.clusters[0].cluster["certificate-authority-data"])
+  client_certificate     = base64decode(local.kube_config.users[0].user["client-certificate-data"])
+  client_key             = base64decode(local.kube_config.users[0].user["client-key-data"])
 }
 
 module "k8s" {
