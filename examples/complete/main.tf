@@ -1,3 +1,7 @@
+provider "alicloud" {
+  region = "cn-zhangjiakou"
+}
+
 data "alicloud_instance_types" "default" {
   #  kubernetes_node_role = "Worker"
   cpu_core_count = 4
