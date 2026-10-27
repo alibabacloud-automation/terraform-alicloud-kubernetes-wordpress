@@ -1,6 +1,6 @@
 variable "wordpress_version" {
-  description = "The version of wordpress. Default to 4.7.3."
-  default     = "4.7.3"
+  description = "The WordPress image version before the -apache suffix. Must be explicitly set, for example 7.1.3-php8.3."
+  default     = null
   type        = string
 }
 
