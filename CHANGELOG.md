@@ -1,3 +1,15 @@
+## [3.0.0](https://github.com/alibabacloud-automation/terraform-alicloud-kubernetes-wordpress/compare/v2.0.0...v3.0.0) (2026-10-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* callers must explicitly set wordpress_version.
+Omitting it no longer selects wordpress:4.7.3-apache.
+
+### Features
+
+* require explicit WordPress image version ([fef4089](https://github.com/alibabacloud-automation/terraform-alicloud-kubernetes-wordpress/commit/fef4089d826517b5b4b5720f785e1718d22caf01))
+
 ## [2.0.0](https://github.com/alibabacloud-automation/terraform-alicloud-kubernetes-wordpress/compare/v1.1.0...v2.0.0) (2026-04-22)
 
 
